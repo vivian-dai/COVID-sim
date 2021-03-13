@@ -1,2 +1,6 @@
-# main.py
-# main program
+import town
+
+"""
+main.py
+The main program (run this!!!)
+"""
