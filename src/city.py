@@ -31,70 +31,60 @@ class City:
                 if ((i*j)%len(building_types) == 1) or ((i*j)%len(building_types) == 2):
                     self.entertainmentBuildings.append(building_types[(i*j)%len(building_types)])
         sexes = ['M', 'F']
-        tf = [True, False]
+        chronically_affected = [True, False, False, False]
 
         for i in range(1500):
-            
-            occupation = random.randint(0, len(town.PROFESSIONS) - 1)
+
+
+            age_chance = random.randint(0,100)
             sex = random.choice(sexes)
-            if town.PROFESSIONS[occupation] == "Unemployed":
-                age = random.randint(0, 100)
-                if age >= 65:
+            if (age_chance <= 67): #adult
+                occupation = random.randint(1, len(town.PROFESSIONS) - 1)
+                age = random.randint(20, 65)
+
+                if town.PROFESSIONS[occupation] == "Doctor":
                     possible_buildings = []
                     for j in self.buildings:
-                        if town.BUILDINGS[int(j.building_type_index)] == "Elderly":
+                        if town.BUILDINGS[int(j.building_type_index)] == "Hospital":
                             possible_buildings.append(j)
                     if len(possible_buildings) > 0:
-                        building = random.choice(possible_buildings)
-                        person = self.people.append(town.Person(building, 
-                        age, occupation, sex, random.choice(tf), random.choice(tf)))
-                        building.people.append(person)
-                else:
+                        self.people.append(town.Person(random.choice(possible_buildings), 
+                        age, occupation, sex,
+                         random.choice(chronically_affected), 1))
+                elif town.PROFESSIONS[occupation] == "Business owner":
+                    possible_jobs = ["Retail", "Food", "Residential", 
+                    "Police station", "9-5 job", "School"]
+                    possible_buildings = []
+                    for j in self.buildings:
+                        if town.BUILDINGS[int(j.building_type_index)] in possible_jobs:
+                            possible_buildings.append(j)
+                    if len(possible_buildings) > 0:
+                        self.people.append(town.Person(random.choice(possible_buildings), 
+                        age, occupation, sex, 
+                         random.choice(chronically_affected), 3))
+                elif town.PROFESSIONS[occupation] == "From home":
                     possible_buildings = []
                     for j in self.buildings:
                         if town.BUILDINGS[int(j.building_type_index)] == "Residential":
                             possible_buildings.append(j)
                     if len(possible_buildings) > 0:
-                        building = random.choice(possible_buildings)
-                        person = self.people.append(town.Person(building, 
-                        age, occupation, sex, random.choice(tf), random.choice(tf)))
-                        building.people.append(person)
-            elif town.PROFESSIONS[occupation] == "Doctor":
-                age = random.randint(25, 65)
-                possible_buildings = []
-                for j in self.buildings:
-                    if town.BUILDINGS[int(j.building_type_index)] == "Hospital":
-                        possible_buildings.append(j)
-                if len(possible_buildings) > 0:
-                    building = random.choice(possible_buildings)
-                    person = self.people.append(town.Person(building, 
-                    age, occupation, sex, random.choice(tf), random.choice(tf)))
-                    building.people.append(person)
-            elif town.PROFESSIONS[occupation] == "Business owner":
-                age = random.randint(25, 65)
-                possible_jobs = ["Retail", "Food", "Residential", "Entertainment", 
-                "Police station", "9-5 job", "School"]
-                possible_buildings = []
-                for j in self.buildings:
-                    if town.BUILDINGS[int(j.building_type_index)] in possible_jobs:
-                        possible_buildings.append(j)
-                if len(possible_buildings) > 0:
-                    building = random.choice(possible_buildings)
-                    person = self.people.append(town.Person(building, 
-                    age, occupation, sex, random.choice(tf), random.choice(tf)))
-                    building.people.append(person)
-            elif town.PROFESSIONS[occupation] == "From home":
-                age = random.randint(25, 65)
-                possible_buildings = []
-                for j in self.buildings:
-                    if town.BUILDINGS[int(j.building_type_index)] == "Residential":
-                        possible_buildings.append(j)
-                if len(possible_buildings) > 0:
-                    building = random.choice(possible_buildings)
-                    person = self.people.append(town.Person(building, 
-                    age, occupation, sex, random.choice(tf), random.choice(tf)))
-                    building.people.append(person)
-            
+                        self.people.append(town.Person(random.choice(possible_buildings), 
+                        age, occupation, sex, 
+                         random.choice(chronically_affected), 3))
+            elif (age_chance  <= 90): #youth
+                age = random.randint(0, 19)
+                self.people.append(town.Person("School", 
+                age, "Unemployed", sex, 
+                         random.choice(chronically_affected), 3))
+            else: #elderly
+                age = random.randint(65, 100)
+                self.people.append(town.Person("Elderly", 
+                age, "Unemployed", sex,
+                         random.choice(chronically_affected), "Elderly"))
+
+
+
+         
     def draw(self, screen):
         """Draws the City
 
@@ -116,7 +106,7 @@ class City:
         """
         for i in range(len(self.people)):
             if (self.people[i].infected) and not(self.people[i].cured):
-                if (happiness < 25) or (random.randInt(0,4) == 0):
+                if (self.happiness < 25) or (random.randint(0,4) == 0):
                     throwAway = True
                     throwCounter = 0
                     while throwAway:
@@ -124,7 +114,7 @@ class City:
                             self.people[throwCounter].infected = True
                             throwAway = False
                         throwCounter +=  1
-                if (self.people[i].age >= 65 or self.people[i].chronic_disease) and (random.randInt(0, 150) == 0):
+                if (self.people[i].age >= 65 or self.people[i].chronic_disease) and (random.randint(0, 150) == 0):
                     self.people[i].hospitalized = True
                     self.people[i].timer = -1
                 self.people[i].timer += 1
@@ -132,5 +122,5 @@ class City:
                     self.people[i].cured = True
                     cured += 1
                     infected -= 1
-            
+            self.people[i].move()
             return cured, infected

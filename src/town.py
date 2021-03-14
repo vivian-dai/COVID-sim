@@ -1,4 +1,6 @@
 import pygame
+import city
+import random
 """
 town.py
 Contains a bunch of classes that are used throughout the town
@@ -117,7 +119,7 @@ class Person:
     """
     Person class template
     """
-    def __init__(self, building, age, profession_index, sex, infected, chronic_disease):
+    def __init__(self, building, age, profession_index, sex, chronic_disease, residence):
         """Constructor for the Person class
 
         Args:
@@ -129,7 +131,7 @@ class Person:
             mask (boolean): if the Person is wearing a mask
             chronic_disease (boolean): if the person is affected with a chronic disease
         """
-        self.residence = True#idk, I'm too lazy
+        self.residence = residence
         self.building = building
         self.age = age
         self.profession_index = profession_index
@@ -138,7 +140,7 @@ class Person:
         self.chronic_disease = chronic_disease
         self.hospitalized = False
         self.timer = 0
-        self.cured = True
+        self.cured = False
         
 
     def move(self, building):
@@ -146,21 +148,32 @@ class Person:
 
         Args:
             building (Building)
-        
+            """
 
-        
-        if self.profession_index == 0:
+        if (self.profession_index == 0):
             if time == (0 or 18):
                 self.residence.people.append(self)
+            elif time == 6:
+                city.City().entertainmentBuildings[random.randint(0,3)].people.append(self)
             else:
+                self.building.people.append(self)
                 
         elif self.profession_index == 1:
-
+            if time == (6 or 12 or 18):
+                self.building.people.append(self)
+            else:
+                self.residence.people.append(self)
         elif self.profession_index == 2:
-
+            if time == (6 or 12):
+                self.building.people.append(self)
+            elif time == 18:
+                city.City().entertainmentBuildings[random.randint(0,3)].people.append(self)
+            else:
+                self.residence.people.append(self)
         else:
-            
-        :
-        self.building = building
-
-        """
+            if time == (12 or 18):
+                self.building.people.append(self)
+            elif time == 0:
+                city.City().entertainmentBuildings[random.randint(0,3)].people.append(self)
+            else:
+                self.residence.people.append(self)
