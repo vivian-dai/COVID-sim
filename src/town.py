@@ -6,7 +6,7 @@ Contains a bunch of classes that are used throughout the town
 #-------------------------------CONSTANTS-------------------------------#
 PROFESSIONS = ["Unemployed", "Doctor", "Buiseness owner", "From home"]
 BUILDINGS = ["Hospital", "Retail", "Food", "Residential", "Entertainment", 
-"Police station", "9-5 job", "Elderly"]
+"Police station", "9-5 job", "Elderly", "School"]
 R_NAUGHT = 2.68
 FATALITY_RATE = 0.001
 
@@ -33,6 +33,8 @@ def get_happiness(building_index):
         return 1
     elif BUILDINGS[building_index] == "Elderly":
         return 3
+    elif BUILDINGS[building_index] == "School":
+        return 3
     else:
         return None
 
@@ -54,36 +56,33 @@ class Building:
         self.y = y
         self.building_type_index = building_type_index
         self.open = is_open
+        self.people = []
 
 class Person:
     """
     Person class template
     """
-    def __init__(self, x, y, age, profession_index, sex, infected, mask):
+    def __init__(self, building, age, profession_index, sex, infected, mask):
         """Constructor for the Person class
 
         Args:
-            x (int): the x position of the Person
-            y (int): the y position of the Person
+            building (Building): the new Building to put the Person in
             age (int): how old the Person is
             profession_index (int): index of the Person's profession
             sex (char): Person's sex
             infected (boolean): if the Person is infected
             mask (boolean): if the Person is wearing a mask
         """
-        self.x = x
-        self.y = y
+        self.building = building
         self.age = age
         self.profession_index = profession_index
         self.sex = sex
         self.infected = infected
 
-    def move(self, new_x, new_y):
-        """Moves the Person to new_x and new_y
+    def move(self, building):
+        """Moves the Person to the Building builing
 
         Args:
-            x_change (int): new x position
-            y_change (int): new y position
+            building (Building)
         """
-        self.x = new_x
-        self.y = new_y
+        self.building = building
