@@ -24,6 +24,7 @@ cooldown = 0
 susceptible = len(city.people)
 infected = 0
 cured = 0
+deaths = 0
 hospitalized = 0
 last_selected_building = None
 
@@ -41,19 +42,21 @@ def redraw_game_window():
     """
     game_window.fill(WHITE)#fill background with white
 
+    display_text(pygame.font.SysFont ("Comic Sans MS", 16), f"Day {day}     Time {time}", BLACK, (500, 0), "CENTER")
     display_text(pygame.font.SysFont ("Comic Sans MS", 16), "Total Susceptible " + str(susceptible), BLACK, (500, 50), "CENTER")
     display_text(pygame.font.SysFont ("Comic Sans MS", 16), "Total Infected " + str(infected), BLACK, (500, 100), "CENTER")
     display_text(pygame.font.SysFont ("Comic Sans MS", 16), "Total Cured " + str(cured), BLACK, (500, 150), "CENTER")
     display_text(pygame.font.SysFont ("Comic Sans MS", 16), "Total Hospitalized " + str(hospitalized), BLACK, (500, 200), "CENTER")
-    display_text(pygame.font.SysFont ("Comic Sans MS", 16), f"Day {day}     Time {time}", BLACK, (500, 250), "CENTER")
+    display_text(pygame.font.SysFont ("Comic Sans MS", 16), "Total Deaths " + str(deaths), BLACK, (500, 250), "CENTER")
+    display_text(pygame.font.SysFont ("Comic Sans MS", 16), "Happiness " + str(city.happiness), BLACK, (500, 300), "CENTER")
     if not last_selected_building is None:
         building_infected = 0
         for person in last_selected_building.people:
             if person is not None and person.infected:
                 building_infected += 1
-        display_text(pygame.font.SysFont ("Comic Sans MS", 16), "Last Selected Building " + town.BUILDINGS[last_selected_building.building_type_index], BLACK, (500, 300), "CENTER")
-        display_text(pygame.font.SysFont ("Comic Sans MS", 16), "Building Population " + str(len(last_selected_building.people)), BLACK, (500, 350), "CENTER")
-        display_text(pygame.font.SysFont ("Comic Sans MS", 16), "Building Infected " + str(building_infected), BLACK, (500, 400), "CENTER")
+        display_text(pygame.font.SysFont ("Comic Sans MS", 16), "Last Selected Building " + town.BUILDINGS[last_selected_building.building_type_index], BLACK, (500, 350), "CENTER")
+        display_text(pygame.font.SysFont ("Comic Sans MS", 16), "Building Population " + str(len(last_selected_building.people)), BLACK, (500, 400), "CENTER")
+        display_text(pygame.font.SysFont ("Comic Sans MS", 16), "Building Infected " + str(building_infected), BLACK, (500, 450), "CENTER")
 
     city.draw(game_window)
     pygame.display.update()#update the display

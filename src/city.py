@@ -5,7 +5,6 @@ import pygame
 city.py
 A predefined template for a city
 """
-happiness = 100
 
 class City:
     """
@@ -20,6 +19,7 @@ class City:
         self.entertainmentBuildings = []
         self.people = []
         self.people = []
+        self.happiness = 100
         building_types = []
         for i in range(len(town.BUILDINGS)):
             building_types.append(i)
@@ -124,7 +124,7 @@ class City:
                             self.people[throwCounter].infected = True
                             throwAway = False
                         throwCounter +=  1
-                if (self.people[i].age >= 65 or self.people[i].chronic_disease) and (random.randInt(0,150) == 0):
+                if (self.people[i].age >= 65 or self.people[i].chronic_disease) and (random.randInt(0, 150) == 0):
                     self.people[i].hospitalized = True
                     self.people[i].timer = -1
                 self.people[i].timer += 1
