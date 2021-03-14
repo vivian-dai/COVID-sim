@@ -1,4 +1,6 @@
 import pygame
+import random
+import city
 """
 town.py
 Contains a bunch of classes that are used throughout the town
@@ -112,26 +114,38 @@ class Person:
         self.cured = True
         
 
-    def move(self, building):
+    def move(self, building, time):
         """Moves the Person to the Building builing
 
         Args:
-            building (Building)
-        
+            building (Building): which Building to move the Person to
+            time (int): the time of day it is
 
-        
+        """
         if self.profession_index == 0:
             if time == (0 or 18):
                 self.residence.people.append(self)
+            elif time == 6:
+                city.entertainmentBuildings[random.randint(0,3)].people.append(self)
             else:
+                self.building.people.append(self)
                 
         elif self.profession_index == 1:
-
+            if time == (6 or 12 or 18):
+                self.building.people.append(self)
+            else:
+                self.residence.people.append(self)
         elif self.profession_index == 2:
-
+            if time == (6 or 12):
+                self.building.people.append(self)
+            elif time == 18:
+                city.entertainmentBuildings[random.randint(0,3)].people.append(self)
+            else:
+                self.residence.people.append(self)
         else:
-            
-        :
-        self.building = building
-
-        """
+            if time == (12 or 18):
+                self.building.people.append(self)
+            elif time == 0:
+                city.entertainmentBuildings[random.randint(0,3)].people.append(self)
+            else:
+                self.residence.people.append(self)

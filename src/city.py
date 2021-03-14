@@ -17,6 +17,8 @@ class City:
         """
         
         self.buildings = []
+        self.entertainmentBuildings = []
+        self.people = []
         self.people = []
         building_types = []
         for i in range(len(town.BUILDINGS)):
@@ -26,9 +28,11 @@ class City:
             for j in range(5):
                 self.buildings.append(town.Building(i*town.Building.BUILDING_SIZE + i*10,
                 j*town.Building.BUILDING_SIZE + j*10, building_types[(i*j)%len(building_types)], True))
-
+                if ((i*j)%len(building_types) == 1) or ((i*j)%len(building_types) == 2):
+                    self.entertainmentBuildings.append(building_types[(i*j)%len(building_types)])
         sexes = ['M', 'F']
         tf = [True, False]
+
         for i in range(1000):
             
             occupation = random.randint(0, len(town.PROFESSIONS) - 1)
@@ -118,8 +122,5 @@ class City:
                     self.people[i].cured = True
                     cured += 1
                     infected -= 1
-                    
-            for i in range(len(self.buildings)):
-                self.buildings = []
             
             return cured, infected
