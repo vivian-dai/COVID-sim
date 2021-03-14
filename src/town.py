@@ -124,28 +124,46 @@ class Person:
         """
         if self.profession_index == 0:
             if time == (0 or 18):
+                self.building.remove(self)
+                building.append(self)
                 self.residence.people.append(self)
             elif time == 6:
+                self.building.remove(self)
+                building.append(self)
                 city.entertainmentBuildings[random.randint(0,3)].people.append(self)
             else:
+                self.building.remove(self)
+                building.append(self)
                 self.building.people.append(self)
                 
         elif self.profession_index == 1:
             if time == (6 or 12 or 18):
+                self.building.remove(self)
+                building.append(self)
                 self.building.people.append(self)
             else:
+                self.building.remove(self)
+                building.append(self)
                 self.residence.people.append(self)
         elif self.profession_index == 2:
             if time == (6 or 12):
+                self.building.remove(self)
+                building.append(self)
                 self.building.people.append(self)
             elif time == 18:
                 city.entertainmentBuildings[random.randint(0,3)].people.append(self)
             else:
+                self.building.remove(self)
+                building.append(self)
                 self.residence.people.append(self)
         else:
             if time == (12 or 18):
+                self.building.remove(self)
+                building.append(self)
                 self.building.people.append(self)
             elif time == 0:
                 city.entertainmentBuildings[random.randint(0,3)].people.append(self)
             else:
+                self.building.remove(self)
+                building.append(self)
                 self.residence.people.append(self)

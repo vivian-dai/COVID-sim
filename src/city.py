@@ -33,7 +33,7 @@ class City:
         sexes = ['M', 'F']
         tf = [True, False]
 
-        for i in range(1000):
+        for i in range(1500):
             
             occupation = random.randint(0, len(town.PROFESSIONS) - 1)
             sex = random.choice(sexes)
@@ -45,16 +45,20 @@ class City:
                         if town.BUILDINGS[int(j.building_type_index)] == "Elderly":
                             possible_buildings.append(j)
                     if len(possible_buildings) > 0:
-                        self.people.append(town.Person(random.choice(possible_buildings), 
+                        building = random.choice(possible_buildings)
+                        person = self.people.append(town.Person(building, 
                         age, occupation, sex, random.choice(tf), random.choice(tf)))
+                        building.people.append(person)
                 else:
                     possible_buildings = []
                     for j in self.buildings:
                         if town.BUILDINGS[int(j.building_type_index)] == "Residential":
                             possible_buildings.append(j)
                     if len(possible_buildings) > 0:
-                        self.people.append(town.Person(random.choice(possible_buildings), 
+                        building = random.choice(possible_buildings)
+                        person = self.people.append(town.Person(building, 
                         age, occupation, sex, random.choice(tf), random.choice(tf)))
+                        building.people.append(person)
             elif town.PROFESSIONS[occupation] == "Doctor":
                 age = random.randint(25, 65)
                 possible_buildings = []
@@ -62,8 +66,10 @@ class City:
                     if town.BUILDINGS[int(j.building_type_index)] == "Hospital":
                         possible_buildings.append(j)
                 if len(possible_buildings) > 0:
-                    self.people.append(town.Person(random.choice(possible_buildings), 
+                    building = random.choice(possible_buildings)
+                    person = self.people.append(town.Person(building, 
                     age, occupation, sex, random.choice(tf), random.choice(tf)))
+                    building.people.append(person)
             elif town.PROFESSIONS[occupation] == "Business owner":
                 age = random.randint(25, 65)
                 possible_jobs = ["Retail", "Food", "Residential", "Entertainment", 
@@ -73,8 +79,10 @@ class City:
                     if town.BUILDINGS[int(j.building_type_index)] in possible_jobs:
                         possible_buildings.append(j)
                 if len(possible_buildings) > 0:
-                    self.people.append(town.Person(random.choice(possible_buildings), 
+                    building = random.choice(possible_buildings)
+                    person = self.people.append(town.Person(building, 
                     age, occupation, sex, random.choice(tf), random.choice(tf)))
+                    building.people.append(person)
             elif town.PROFESSIONS[occupation] == "From home":
                 age = random.randint(25, 65)
                 possible_buildings = []
@@ -82,8 +90,10 @@ class City:
                     if town.BUILDINGS[int(j.building_type_index)] == "Residential":
                         possible_buildings.append(j)
                 if len(possible_buildings) > 0:
-                    self.people.append(town.Person(random.choice(possible_buildings), 
+                    building = random.choice(possible_buildings)
+                    person = self.people.append(town.Person(building, 
                     age, occupation, sex, random.choice(tf), random.choice(tf)))
+                    building.people.append(person)
             
     def draw(self, screen):
         """Draws the City
@@ -111,7 +121,7 @@ class City:
                     throwCounter = 0
                     while throwAway:
                         if (self.people[throwCounter].infected == False):
-                            self.people[throwCounter].infected = True;
+                            self.people[throwCounter].infected = True
                             throwAway = False
                         throwCounter +=  1
                 if (self.people[i].age >= 65 or self.people[i].chronic_disease) and (random.randInt(0,150) == 0):

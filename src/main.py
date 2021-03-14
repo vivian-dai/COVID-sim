@@ -21,7 +21,7 @@ run = True
 city = city.City()
 
 cooldown = 0
-susceptible = 1000
+susceptible = len(city.people)
 infected = 0
 cured = 0
 hospitalized = 0
@@ -47,7 +47,13 @@ def redraw_game_window():
     display_text(pygame.font.SysFont ("Comic Sans MS", 16), "Total Hospitalized " + str(hospitalized), BLACK, (500, 200), "CENTER")
     display_text(pygame.font.SysFont ("Comic Sans MS", 16), f"Day {day}     Time {time}", BLACK, (500, 250), "CENTER")
     if not last_selected_building is None:
-        display_text(pygame.font.SysFont ("Comic Sans MS", 16), "Last selected building " + town.BUILDINGS[last_selected_building.building_type_index], BLACK, (500, 300), "CENTER")
+        building_infected = 0
+        for person in last_selected_building.people:
+            if person is not None and person.infected:
+                building_infected += 1
+        display_text(pygame.font.SysFont ("Comic Sans MS", 16), "Last Selected Building " + town.BUILDINGS[last_selected_building.building_type_index], BLACK, (500, 300), "CENTER")
+        display_text(pygame.font.SysFont ("Comic Sans MS", 16), "Building Population " + str(len(last_selected_building.people)), BLACK, (500, 350), "CENTER")
+        display_text(pygame.font.SysFont ("Comic Sans MS", 16), "Building Infected " + str(building_infected), BLACK, (500, 400), "CENTER")
 
     city.draw(game_window)
     pygame.display.update()#update the display
@@ -111,6 +117,7 @@ while run:
                 run = False
             elif event.key == pygame.K_SPACE:
                 time, day = time_period(time, day, cured, infected)
+
     for building in city.buildings:
         if building.is_inside(mousex, mousey) and pygame.mouse.get_pressed()[0] and cooldown == 0:
             last_selected_building = building
