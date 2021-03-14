@@ -1,6 +1,7 @@
 import town
 import random
 import pygame
+import prediction
 """
 city.py
 A predefined template for a city
@@ -97,7 +98,7 @@ class City:
         for i in range(len(self.buildings)):
             self.buildings[i].draw(screen)
 
-    def people_leave(self, cured, infected):
+    def people_leave(self, cured, infected, log_softmax=None):
         """calculates how many People in the City are cured and infected
 
         Args:
@@ -107,6 +108,11 @@ class City:
         Returns:
             [tuple]: (cured[int], infected[int])
         """
+        if log_softmax != None:
+            prediction=predict(log_softmax)
+            for subject in range(self.people):
+                if prediction[subject] == 1 & self.people[subject].cured!=True:
+                    self.people[i].infected = True
         for i in range(len(self.people)):
             if (self.people[i].infected) and not(self.people[i].cured):
                 if (self.happiness < 25) or (random.randint(0,4) == 0):
