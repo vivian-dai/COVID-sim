@@ -1,6 +1,4 @@
 import pygame
-import random
-import city
 """
 town.py
 Contains a bunch of classes that are used throughout the town
@@ -13,6 +11,14 @@ BUILDINGS = ["Hospital", "Retail", "Food", "Residential", "Entertainment",
 R_NAUGHT = 2.68
 FATALITY_RATE = 0.001
 BLACK = (0,0,0)
+RED = (255,0,0)
+GREEN = (0,255,0)
+BLUE = (0,0,255)
+YELLOW = (255,255,0)
+PURPLE = (128,0,128)
+ORANGE = (255,128,0)
+TEAL = (0,128,128)
+GREY = (128,128,128)
 
 def get_happiness(building_index):
     """gets the happiness loss based on Building type
@@ -80,10 +86,31 @@ class Building:
         Args:
             screen (pygame surface): screen to draw on
         """
-        if self.open:
-            pygame.draw.rect(screen, BLACK,(self.x, self.y, 64,64), 2)
+        
+
+        if self.building_type_index == 0:
+            colour = RED
+        elif self.building_type_index == 1:
+            colour = TEAL
+        elif self.building_type_index == 2:
+            colour = GREEN
+        elif self.building_type_index == 3:
+            colour = BLACK
+        elif self.building_type_index == 4:
+            colour = PURPLE
+        elif self.building_type_index == 5:
+            colour = BLUE
+        elif self.building_type_index == 5:
+            colour = GREY
+        elif self.building_type_index == 5:
+            colour = ORANGE
         else:
-            pygame.draw.rect(screen, BLACK,(self.x, self.y, 64, 64))
+            colour = YELLOW
+
+        if self.open:
+            pygame.draw.rect(screen, colour,(self.x, self.y, 64,64), 2)
+        else:
+            pygame.draw.rect(screen, colour,(self.x, self.y, 64, 64))
 
 
 class Person:
@@ -114,56 +141,26 @@ class Person:
         self.cured = True
         
 
-    def move(self, building, time):
+    def move(self, building):
         """Moves the Person to the Building builing
 
         Args:
-            building (Building): which Building to move the Person to
-            time (int): the time of day it is
+            building (Building)
+        
 
-        """
+        
         if self.profession_index == 0:
             if time == (0 or 18):
-                self.building.remove(self)
-                building.append(self)
                 self.residence.people.append(self)
-            elif time == 6:
-                self.building.remove(self)
-                building.append(self)
-                city.entertainmentBuildings[random.randint(0,3)].people.append(self)
             else:
-                self.building.remove(self)
-                building.append(self)
-                self.building.people.append(self)
                 
         elif self.profession_index == 1:
-            if time == (6 or 12 or 18):
-                self.building.remove(self)
-                building.append(self)
-                self.building.people.append(self)
-            else:
-                self.building.remove(self)
-                building.append(self)
-                self.residence.people.append(self)
+
         elif self.profession_index == 2:
-            if time == (6 or 12):
-                self.building.remove(self)
-                building.append(self)
-                self.building.people.append(self)
-            elif time == 18:
-                city.entertainmentBuildings[random.randint(0,3)].people.append(self)
-            else:
-                self.building.remove(self)
-                building.append(self)
-                self.residence.people.append(self)
+
         else:
-            if time == (12 or 18):
-                self.building.remove(self)
-                building.append(self)
-                self.building.people.append(self)
-            elif time == 0:
-                city.entertainmentBuildings[random.randint(0,3)].people.append(self)
-            else:
-                self.building.remove(self)
-                building.append(self)
-                self.residence.people.append(self)
+            
+        :
+        self.building = building
+
+        """
