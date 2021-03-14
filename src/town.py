@@ -11,6 +11,12 @@ BUILDINGS = ["Hospital", "Retail", "Food", "Residential", "Entertainment",
 R_NAUGHT = 2.68
 FATALITY_RATE = 0.001
 BLACK = (0,0,0)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0,0,255)
+YELLOW = (255,255,0)
+PURPLE = (128,0,128)
+ORANGE = ()
 
 def get_happiness(building_index):
     """gets the happiness loss based on Building type

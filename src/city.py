@@ -102,15 +102,15 @@ class City:
         """
         for i in range(len(self.people)):
             if (self.people[i].infected) and not(self.people[i].cured):
-                if (happiness < 25) or (random.randInt(0,4) == 0):
+                if (happiness < 25) or (random.randint(0,4) == 0):
                     throwAway = True
                     throwCounter = 0
                     while throwAway:
                         if (self.people[throwCounter].infected == False):
-                            self.people[throwCounter].infected = True;
+                            self.people[throwCounter].infected = True
                             throwAway = False
                         throwCounter +=  1
-                if (self.people[i].age >= 65 or self.people[i].chronic_disease) and (random.randInt(0,150) == 0):
+                if (self.people[i].age >= 65 or self.people[i].chronic_disease) and (random.randint(0,150) == 0):
                     self.people[i].hospitalized = True
                     self.people[i].timer = -1
                 self.people[i].timer += 1

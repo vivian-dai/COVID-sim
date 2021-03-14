@@ -269,7 +269,7 @@ class city_Structure():
                             throwAway = False
                         throwCounter +=  1
                 if (self.people[i].age >= 65 or self.people[i].chronic_disease) and (random.randInt(0,150) == 0):
-                    self.people[i].hospitalized = true
+                    self.people[i].hospitalized = True
                     self.people[i].timer = -1
                 self.people[i].timer += 1
                 if (self.people[i].timer == 56):
