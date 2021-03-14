@@ -82,7 +82,7 @@ class City:
                     age, occupation, sex, random.choice(tf), random.choice(tf)))
             
     def draw(self, screen):
-        """[summary]
+        """Draws the City
 
         Args:
             screen (pygame surface): the screen to draw on
@@ -91,7 +91,15 @@ class City:
             self.buildings[i].draw(screen)
 
     def people_leave(self, cured, infected):
+        """calculates how many People in the City are cured and infected
 
+        Args:
+            cured (int): number of people that are cured
+            infected (int): number of people infected
+
+        Returns:
+            [tuple]: (cured[int], infected[int])
+        """
         for i in range(len(self.people)):
             if (self.people[i].infected) and not(self.people[i].cured):
                 if (happiness < 25) or (random.randInt(0,4) == 0):

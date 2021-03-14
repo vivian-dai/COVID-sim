@@ -76,7 +76,7 @@ class Building:
         """Draws the Building
 
         Args:
-            screen (surface): [description]
+            screen (pygame surface): screen to draw on
         """
         if self.open:
             pygame.draw.rect(screen, BLACK,(self.x, self.y, 64,64), 2)

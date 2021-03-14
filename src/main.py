@@ -32,13 +32,16 @@ game_window = pygame.display.set_mode((800, 600))
 
 
 
-def redrawgameWindow():
+def redraw_game_window():
+    """
+    Redraws the entire game window
+    """
     game_window.fill(WHITE)#fill background with white
 
-    displayText(pygame.font.SysFont ("Comic Sans MS", 16), "Susceptible " + str(susceptible), BLACK, (500, 100), "CENTER")
-    displayText(pygame.font.SysFont ("Comic Sans MS", 16), "Infected " + str(infected), BLACK, (500, 200), "CENTER")
-    displayText(pygame.font.SysFont ("Comic Sans MS", 16), "Cured " + str(cured), BLACK, (500, 300), "CENTER")
-    displayText(pygame.font.SysFont ("Comic Sans MS", 16), "Hospitalized " + str(hospitalized), BLACK, (500, 400), "CENTER")
+    display_text(pygame.font.SysFont ("Comic Sans MS", 16), "Susceptible " + str(susceptible), BLACK, (500, 100), "CENTER")
+    display_text(pygame.font.SysFont ("Comic Sans MS", 16), "Infected " + str(infected), BLACK, (500, 200), "CENTER")
+    display_text(pygame.font.SysFont ("Comic Sans MS", 16), "Cured " + str(cured), BLACK, (500, 300), "CENTER")
+    display_text(pygame.font.SysFont ("Comic Sans MS", 16), "Hospitalized " + str(hospitalized), BLACK, (500, 400), "CENTER")
     
     city.draw(game_window)
     pygame.display.update()#update the display
@@ -47,7 +50,12 @@ def redrawgameWindow():
 
 
 time = 0
-def time_Period():
+def time_period(time):
+    """updates the time period
+
+    Args:
+        time (int): time of day
+    """
     time += 6
     if (time == 24):
         time = 0
@@ -57,7 +65,16 @@ def time_Period():
 
 
 
-def displayText(font, text, colour, location, centered): #ultra laziness retuns!
+def display_text(font, text, colour, location, centered): #ultra laziness retuns!
+    """Displays text on the screen
+
+    Args:
+        font (pygame Font): the type of Font to use
+        text (string): words to display
+        colour (pygame color): colour of the text
+        location (tuple): a tuple of coordinates (x [int], y [int]) to draw the text at
+        centered (string): description of how the text is aligned
+    """
     if centered == "LEFT": #if I put left, it'll blit the text normally
         game_window.blit(font.render(text, 0, colour),location)
     elif centered == "RIGHT":#blits the text on the right
@@ -88,6 +105,6 @@ while run:
     if (cooldown > 0):
         cooldown-= 1
     
-    redrawgameWindow()
+    redraw_game_window()
 
 pygame.quit()
