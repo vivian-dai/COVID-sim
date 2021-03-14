@@ -100,9 +100,9 @@ class Building:
             colour = PURPLE
         elif self.building_type_index == 5:
             colour = BLUE
-        elif self.building_type_index == 5:
+        elif self.building_type_index == 6:
             colour = GREY
-        elif self.building_type_index == 5:
+        elif self.building_type_index == 7:
             colour = ORANGE
         else:
             colour = YELLOW
