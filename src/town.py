@@ -102,9 +102,9 @@ class Building:
             colour = PURPLE
         elif self.building_type_index == 5:
             colour = BLUE
-        elif self.building_type_index == 5:
+        elif self.building_type_index == 6:
             colour = GREY
-        elif self.building_type_index == 5:
+        elif self.building_type_index == 7:
             colour = ORANGE
         else:
             colour = YELLOW
@@ -140,7 +140,9 @@ class Person:
         self.chronic_disease = chronic_disease
         self.hospitalized = False
         self.timer = 0
+        self.death_timer = 0
         self.cured = False
+        
         
 
     def move(self, building):
@@ -149,31 +151,58 @@ class Person:
         Args:
             building (Building)
             """
-
-        if (self.profession_index == 0):
-            if time == (0 or 18):
-                self.residence.people.append(self)
-            elif time == 6:
-                city.City().entertainmentBuildings[random.randint(0,3)].people.append(self)
+        if not (self.hospitalized):
+            if (self.profession_index == 0):
+                if time == (0 or 18):
+                    self.residence.people.append(self)
+                elif time == 6:
+                    happy = False
+                    for i in range(len(city.City().entertainment_list)):
+                        if (city.City().entertainment_list[i].open):
+                            city.City().entertainment_list[i].people.append(self)
+                            happy = True
+                            break
+                    if not happy:
+                        city.City().happiness -= 5
+                else:
+                    self.building.people.append(self)
+                    
+            elif self.profession_index == 1:
+                if time == (6 or 12 or 18):
+                    self.building.people.append(self)
+                else:
+                    self.residence.people.append(self)
+            elif self.profession_index == 2:
+                if time == (6 or 12):
+                    self.building.people.append(self)
+                elif time == 18:
+                    happy = False
+                    for i in range(len(city.City().entertainment_list)):
+                        if (city.City().entertainment_list[i].open):
+                            city.City().entertainment_list[i].people.append(self)
+                            happy = True
+                            break
+                    if not happy:
+                        city.City().happiness -= 5
+                else:
+                    self.residence.people.append(self)
             else:
-                self.building.people.append(self)
-                
-        elif self.profession_index == 1:
-            if time == (6 or 12 or 18):
-                self.building.people.append(self)
-            else:
-                self.residence.people.append(self)
-        elif self.profession_index == 2:
-            if time == (6 or 12):
-                self.building.people.append(self)
-            elif time == 18:
-                city.City().entertainmentBuildings[random.randint(0,3)].people.append(self)
-            else:
-                self.residence.people.append(self)
+                if time == (12 or 18):
+                    self.building.people.append(self)
+                elif time == 0:
+                    happy = False
+                    for i in range(len(city.City().entertainment_list)):
+                        if (city.City().entertainment_list[i].open):
+                            city.City().entertainment_list[i].people.append(self)
+                            happy = True
+                            break
+                    if not happy:
+                        city.City().happiness -= 5
+                else:
+                    self.residence.people.append(self)
         else:
-            if time == (12 or 18):
-                self.building.people.append(self)
-            elif time == 0:
-                city.City().entertainmentBuildings[random.randint(0,3)].people.append(self)
-            else:
-                self.residence.people.append(self)
+            for i in range(len(city.City().hospital_list)):
+                if (city.City().hospital_list[i].open) and (len(city.City().hospital_list[i].people) < 64):
+                    self.deathTimer = 0
+                    city.City().hospital_list[i].people.append(self)
+                    break

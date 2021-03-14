@@ -16,7 +16,8 @@ class City:
         """
         
         self.buildings = []
-        self.entertainmentBuildings = []
+        self.hospital_list = []
+        self.entertainment_list = []
         self.people = []
         self.people = []
         self.happiness = 100
@@ -29,7 +30,9 @@ class City:
                 self.buildings.append(town.Building(i*town.Building.BUILDING_SIZE + i*10,
                 j*town.Building.BUILDING_SIZE + j*10, building_types[(i*j)%len(building_types)], True))
                 if ((i*j)%len(building_types) == 1) or ((i*j)%len(building_types) == 2):
-                    self.entertainmentBuildings.append(building_types[(i*j)%len(building_types)])
+                    self.entertainment_list.append(building_types[(i*j)%len(building_types)])
+                elif ((i*j)%len(building_types) == 0):
+                    self.hospitalList.append(building_types[(i*j)%len(building_types)])
         sexes = ['M', 'F']
         chronically_affected = [True, False, False, False]
 
@@ -123,4 +126,6 @@ class City:
                     cured += 1
                     infected -= 1
             self.people[i].move()
+            if (self.people[i].hospitalized) and ((self.people[i].deathTimer) > 8):
+                self.people.pop(i)
             return cured, infected
