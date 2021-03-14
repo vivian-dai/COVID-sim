@@ -1,3 +1,4 @@
+import pygame
 """
 town.py
 Contains a bunch of classes that are used throughout the town
@@ -9,6 +10,7 @@ BUILDINGS = ["Hospital", "Retail", "Food", "Residential", "Entertainment",
 "Police station", "9-5 job", "Elderly", "School"]
 R_NAUGHT = 2.68
 FATALITY_RATE = 0.001
+BLACK = (0,0,0)
 
 def get_happiness(building_index):
     """gets the happiness loss based on Building type
@@ -70,11 +72,23 @@ class Building:
         """
         return x >= self.x and x < self.x + self.BUILDING_SIZE and y > self.y and y < self.y + self.BUILDING_SIZE
 
+    def draw(self, screen):
+        """Draws the Building
+
+        Args:
+            screen (surface): [description]
+        """
+        if self.open:
+            pygame.draw.rect(screen, BLACK,(self.x, self.y, 64,64), 2)
+        else:
+            pygame.draw.rect(screen, BLACK,(self.x, self.y, 64, 64))
+
+
 class Person:
     """
     Person class template
     """
-    def __init__(self, building, age, profession_index, sex, infected, mask):
+    def __init__(self, building, age, profession_index, sex, infected, chronic_disease):
         """Constructor for the Person class
 
         Args:
@@ -84,17 +98,40 @@ class Person:
             sex (char): Person's sex
             infected (boolean): if the Person is infected
             mask (boolean): if the Person is wearing a mask
+            chronic_disease (boolean): if the person is affected with a chronic disease
         """
+        self.residence = True#idk, I'm too lazy
         self.building = building
         self.age = age
         self.profession_index = profession_index
         self.sex = sex
-        self.infected = infected
+        self.infected = False
+        self.chronic_disease = chronic_disease
+        self.hospitalized = False
+        self.timer = 0
+        self.cured = True
+        
 
     def move(self, building):
         """Moves the Person to the Building builing
 
         Args:
             building (Building)
-        """
+        
+
+        
+        if self.profession_index == 0:
+            if time == (0 or 18):
+                self.residence.people.append(self)
+            else:
+                
+        elif self.profession_index == 1:
+
+        elif self.profession_index == 2:
+
+        else:
+            
+        :
         self.building = building
+
+        """
