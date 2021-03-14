@@ -58,6 +58,18 @@ class Building:
         self.open = is_open
         self.people = []
 
+    def is_inside(self, x, y):
+        """Checks if the coordinates (x, y) is inside the Building
+
+        Args:
+            x (int): the x coordinate
+            y (int): the y coordinate
+
+        Returns:
+            [boolean]: checks if the x and y coordinates are inside this Building with a conditional
+        """
+        return x >= self.x and x < self.x + self.BUILDING_SIZE and y > self.y and y < self.y + self.BUILDING_SIZE
+
 class Person:
     """
     Person class template

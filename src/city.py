@@ -38,23 +38,26 @@ class City:
                     for j in self.buildings:
                         if town.BUILDINGS[int(j.building_type_index)] == "Elderly":
                             possible_buildings.append(j)
-                    self.people.append(town.Person(random.choice(possible_buildings), 
-                    age, occupation, sex, random.choice(tf), random.choice(tf)))
+                    if len(possible_buildings) > 0:
+                        self.people.append(town.Person(random.choice(possible_buildings), 
+                        age, occupation, sex, random.choice(tf), random.choice(tf)))
                 else:
                     possible_buildings = []
                     for j in self.buildings:
                         if town.BUILDINGS[int(j.building_type_index)] == "Residential":
                             possible_buildings.append(j)
-                    self.people.append(town.Person(random.choice(possible_buildings), 
-                    age, occupation, sex, random.choice(tf), random.choice(tf)))
+                    if len(possible_buildings) > 0:
+                        self.people.append(town.Person(random.choice(possible_buildings), 
+                        age, occupation, sex, random.choice(tf), random.choice(tf)))
             elif town.PROFESSIONS[occupation] == "Doctor":
                 age = random.randint(30, 65)
                 possible_buildings = []
                 for j in self.buildings:
                     if town.BUILDINGS[int(j.building_type_index)] == "Hospital":
                         possible_buildings.append(j)
-                self.people.append(town.Person(random.choice(possible_buildings), 
-                age, occupation, sex, random.choice(tf), random.choice(tf)))
+                if len(possible_buildings) > 0:
+                    self.people.append(town.Person(random.choice(possible_buildings), 
+                    age, occupation, sex, random.choice(tf), random.choice(tf)))
             elif town.PROFESSIONS[occupation] == "Business owner":
                 age = random.randint(30, 65)
                 possible_jobs = ["Retail", "Food", "Residential", "Entertainment", 
@@ -63,13 +66,15 @@ class City:
                 for j in self.buildings:
                     if town.BUILDINGS[int(j.building_type_index)] in possible_jobs:
                         possible_buildings.append(j)
-                self.people.append(town.Person(random.choice(possible_buildings), 
-                age, occupation, sex, random.choice(tf), random.choice(tf)))
+                if len(possible_buildings) > 0:
+                    self.people.append(town.Person(random.choice(possible_buildings), 
+                    age, occupation, sex, random.choice(tf), random.choice(tf)))
             elif town.PROFESSIONS[occupation] == "From home":
                 age = random.randint(30, 65)
                 possible_buildings = []
                 for j in self.buildings:
                     if town.BUILDINGS[int(j.building_type_index)] == "Residential":
                         possible_buildings.append(j)
-                self.people.append(town.Person(random.choice(possible_buildings), 
-                age, occupation, sex, random.choice(tf), random.choice(tf)))
+                if len(possible_buildings) > 0:
+                    self.people.append(town.Person(random.choice(possible_buildings), 
+                    age, occupation, sex, random.choice(tf), random.choice(tf)))
